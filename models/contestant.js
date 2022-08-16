@@ -29,6 +29,10 @@ const contestantSchema = new Schema({
     IQ: {
         type: Number,
         required: true
+    },
+    imgSrc: {
+        type: String,
+        default: null
     }
 }, {
     timestamps: true
