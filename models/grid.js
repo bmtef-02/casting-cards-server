@@ -19,12 +19,10 @@ const gridSchema = new Schema({
     },
     selectedNames: [{
         type: String,
-        required: true
     }],
-    numPages: {
-        type: Number,
-        required: true
-    },
+    numPages: [{
+        type: String,
+    }],
     gridType: {
         type: String,
         required: true
