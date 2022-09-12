@@ -1,9 +1,11 @@
 const express = require('express');
 const Contestant = require('../models/contestant');
 const contestantsRouter = express.Router();
+const cors = require("./cors");
 
 contestantsRouter.route('/')
-.get((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.corsWithOptions, (req, res, next) => {
     Contestant.find()
     .then(contestants => {
         res.statusCode = 200;
@@ -12,7 +14,7 @@ contestantsRouter.route('/')
     })
     .catch(err => next(err));
 })
-.post((req, res, next) => {
+.post(cors.corsWithOptions, (req, res, next) => {
     Contestant.create(req.body)
     .then(contestant => {
         console.log(`Contestant Added: ${contestant}`);
@@ -22,11 +24,11 @@ contestantsRouter.route('/')
     })
     .catch(err => next(err));
 })
-.put((req, res) => {
+.put(cors.corsWithOptions, (req, res) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /contestants')
 })
-.delete((req, res, next) => {
+.delete(cors.corsWithOptions, (req, res, next) => {
     Contestant.deleteMany()
     .then(response => {
         res.statusCode = 200;
@@ -37,7 +39,8 @@ contestantsRouter.route('/')
 })
 
 contestantsRouter.route('/:contestantId')
-.get((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.corsWithOptions, (req, res, next) => {
     Contestant.findById(req.params.contestantId)
     .then(contestant => {
         console.log(`Found contestant: ${contestant}`);
@@ -47,11 +50,11 @@ contestantsRouter.route('/:contestantId')
     })
     .catch(err => next(err));
 })
-.post((req, res) => {
+.post(cors.corsWithOptions, (req, res) => {
     res.statusCode = 403;
     res.end('POST operation is not available for this route');
 })
-.put((req, res, next) => {
+.put(cors.corsWithOptions, (req, res, next) => {
     Contestant.findByIdAndUpdate(req.params.contestantId, { $set: req.body }, { new: true })
     .then(contestant => {
         console.log(`Updated contestant: ${contestant}`);
@@ -61,7 +64,7 @@ contestantsRouter.route('/:contestantId')
     })
     .catch(err => next(err));
 })
-.delete((req, res, next) => {
+.delete(cors.corsWithOptions, (req, res, next) => {
     Contestant.findByIdAndDelete(req.params.contestantId)
     .then(contestant => {
         console.log(`Contestant deleted: ${contestant}`);

@@ -3,7 +3,8 @@ const Grid = require('../models/grid');
 const gridsRouter = express.Router();
 
 gridsRouter.route('/')
-.get((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.corsWithOptions, (req, res, next) => {
     Grid.find()
     .then(grids => {
         res.statusCode = 200;
@@ -12,7 +13,7 @@ gridsRouter.route('/')
     })
     .catch(err => next(err));
 })
-.post((req, res, next) => {
+.post(cors.corsWithOptions, (req, res, next) => {
     Grid.create(req.body)
     .then(grid => {
         console.log(`Grid Added: ${grid}`);
@@ -22,11 +23,11 @@ gridsRouter.route('/')
     })
     .catch(err => next(err));
 })
-.put((req, res) => {
+.put(cors.corsWithOptions, (req, res) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /grids')
 })
-.delete((req, res, next) => {
+.delete(cors.corsWithOptions, (req, res, next) => {
     Grid.deleteMany()
     .then(response => {
         res.statusCode = 200;
@@ -37,7 +38,8 @@ gridsRouter.route('/')
 })
 
 gridsRouter.route('/:gridId')
-.get((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.corsWithOptions, (req, res, next) => {
     Grid.findById(req.params.gridId)
     .then(grid => {
         console.log(`Found grid: ${grid}`);
@@ -47,11 +49,11 @@ gridsRouter.route('/:gridId')
     })
     .catch(err => next(err));
 })
-.post((req, res) => {
+.post(cors.corsWithOptions, (req, res) => {
     res.statusCode = 403;
     res.end('POST operation is not available for this route');
 })
-.put((req, res, next) => {
+.put(cors.corsWithOptions, (req, res, next) => {
     Grid.findByIdAndUpdate(req.params.gridId, { $set: req.body }, { new: true })
     .then(grid => {
         console.log(`Updated grid: ${grid}`);
@@ -61,7 +63,7 @@ gridsRouter.route('/:gridId')
     })
     .catch(err => next(err));
 })
-.delete((req, res, next) => {
+.delete(cors.corsWithOptions, (req, res, next) => {
     Grid.findByIdAndDelete(req.params.gridId)
     .then(grid => {
         console.log(`Grid deleted: ${grid}`);
