@@ -1,6 +1,7 @@
 const express = require('express');
 const Grid = require('../models/grid');
 const gridsRouter = express.Router();
+const cors = require("./cors");
 
 gridsRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
