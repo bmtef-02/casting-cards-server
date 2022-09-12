@@ -1,6 +1,6 @@
 const cors = require("cors");
 
-const whitelist = ["http://localhost:3000", "http://localhost:3001", "https://dry-cliffs-03397.herokuapp.com/"];
+const whitelist = ["http://localhost:3000", "http://localhost:3001", "https://casting-card-client.netlify.app"];
 const corsOptionsDelegate = (req, callback) => {
     let corsOptions;
     console.log(req.header("Origin"));
