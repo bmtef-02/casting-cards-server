@@ -9,7 +9,7 @@ contestantsRouter.route('/')
     Contestant.find()
     .then(contestants => {
         res.statusCode = 200;
-        res.setHeader('content-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         res.json(contestants);
     })
     .catch(err => next(err));

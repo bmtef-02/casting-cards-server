@@ -9,7 +9,7 @@ gridsRouter.route('/')
     Grid.find()
     .then(grids => {
         res.statusCode = 200;
-        res.setHeader('content-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         res.json(grids);
     })
     .catch(err => next(err));
